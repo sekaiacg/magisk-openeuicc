@@ -1,0 +1,53 @@
+name: Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: "Release Build"
+        required: false
+        type: boolean
+      ref:
+        description: "Git Reference"
+        required: true
+        type: string
+        default: modify_6
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Checkout OpenEUICC
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: "${{ github.event.inputs.ref }}"
+          repository: sekaiacg/openeuicc
+          submodules: true
+          path: OpenEUICC
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: temurin
+          cache: gradle
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: tools build-tools;36.0.0 platform-tools
+      - run: ./build.py
+        env:
+          PYTHONUNBUFFERED: 1
+          BUILD_RELEASE: "${{ github.event.inputs.release }}"
+          BUILD_KEYSTORE_ZIPPED: "${{ secrets.BUILD_KEYSTORE_ZIPPED }}"
+          BUILD_KEYSTORE_PASSWORD: "${{ secrets.BUILD_KEYSTORE_PASSWORD }}"
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: artifacts
+          keep_files: true

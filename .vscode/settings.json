@@ -1,0 +1,12 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "always"
+  },
+  "json.schemas": [
+    {
+      "fileMatch": ["/variants.json"],
+      "url": ".vscode/schema/variants.json"
+    }
+  ]
+}

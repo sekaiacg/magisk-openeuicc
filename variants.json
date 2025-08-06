@@ -1,0 +1,34 @@
+[
+  {
+    "name": "OpenEUICC",
+    "variant": "app",
+    "branch_pattern": "^modify",
+    "output_file": "OpenEUICC.apk",
+    "sign_keys": [
+      "sakurasim.jks",
+      "CommunityKey.jks",
+      "wenzi.jks",
+      "9eSIMCommunityKey.jks"
+    ]
+  },
+  {
+    "name": "EasyEUICC M",
+    "variant": "app-unpriv",
+    "branch_pattern": "^modify",
+    "output_file": "EasyEUICC-M.apk",
+    "sign_keys": [
+      "sakurasim.jks",
+      "CommunityKey.jks",
+      "wenzi.jks",
+      "9eSIMCommunityKey.jks"
+    ]
+  },
+  {
+    "name": "9eSIM LPA",
+    "variant": "app-unpriv",
+    "flavor": "9esim",
+    "branch_pattern": "^9esim",
+    "output_file": "9eSIM-LPA.apk",
+    "sign_keys": ["9eSIMCommunityKey.jks"]
+  }
+]
